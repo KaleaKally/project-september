@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Project September</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2a2a4e;
+            font-family: 'Press Start 2P', monospace;
+            padding: 20px;
+            /* Prevent text selection on mobile */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* Prevent iOS bounce */
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 640px;
+            height: 540px;
+            background: linear-gradient(180deg, #2a2a4e 0%, #1a1a3e 100%);
+            border: 4px solid #FFD700;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Title Screen */
+        .title-screen {
+            height: 100%;
+            padding: 60px 40px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: clamp(24px, 5vw, 36px);
+            color: #FFD700;
+            text-shadow: 
+                3px 3px 0 #B8860B,
+                4px 4px 8px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: clamp(12px, 2.5vw, 16px);
+            color: #B19CD9;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .heart {
+            font-size: 48px;
+            color: #FF69B4;
+            margin-bottom: 40px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .start-button {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(14px, 2.5vw, 18px);
+            padding: 20px 40px;
+            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+            border: 3px solid #8B4513;
+            border-radius: 4px;
+            color: #2A1A0A;
+            cursor: pointer;
+            box-shadow: 
+                0 4px 0 #654321,
+                0 8px 16px rgba(0, 0, 0, 0.5);
+            transition: all 0.1s;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 0 #654321,
+                0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .start-button:active {
+            transform: translateY(2px);
+            box-shadow: 
+                0 2px 0 #654321,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .dedication {
+            margin-top: 40px;
+            font-size: clamp(10px, 2vw, 12px);
+            color: #9B9B9B;
+            opacity: 0.8;
+        }
+
+        /* Game Screen */
+        .game-screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .pixel-canvas-area {
+            height: 320px;
+            background: #000;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gameCanvas {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            width: 100%;
+            height: 100%;
+            max-width: 480px;
+            max-height: 320px;
+        }
+
+        .dialogue-area {
+            flex: 1;
+            background: linear-gradient(180deg, #1a2a4a 0%, #0f1f3a 100%);
+            border-top: 3px solid #FFD700;
+            padding: 15px;
+            position: relative;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 220px;
+        }
+
+        .speaker-name {
+            color: #FFD700;
+            font-size: 11px;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 0 #000;
+            flex-shrink: 0;
+        }
+
+        .dialogue-text {
+            color: #FFFFFF;
+            font-size: 10px;
+            line-height: 1.6;
+            text-shadow: 1px 1px 0 #000;
+            margin-bottom: 5px;
+            flex-shrink: 0;
+        }
+
+        .continue-indicator {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            color: #FFD700;
+            font-size: 14px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* Choice buttons Game Boy style */
+        .choice-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 5px;
+            flex-shrink: 0;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .choice-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 9px;
+            padding: 8px 12px;
+            background: linear-gradient(180deg, #4A5568 0%, #2D3748 100%);
+            border: 2px solid #FFD700;
+            color: #FFFFFF;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.1s;
+            line-height: 1.2;
+            word-wrap: break-word;
+            flex-shrink: 0;
+        }
+        
+        
+        .choice-btn:hover {
+            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+            color: #000000;
+            padding: 8px 16px;
+            margin: 0 -4px;
+        }
+        
+        .choice-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Mobile responsive design */
+        @media (max-width: 768px) {
+            .game-container {
+                height: 90vh; /* Use viewport height for better mobile experience */
+                max-width: 100%;
+            }
+            
+            .pixel-canvas-area {
+                height: 40%; /* Use percentage for better scaling */
+                max-height: 300px;
+            }
+            
+            .dialogue-area {
+                flex: 1; /* Take remaining space */
+                min-height: 0; /* Allow flex to control height */
+                padding: 12px;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .choice-buttons {
+                flex: 1; /* Take available space */
+                max-height: none; /* Remove restriction */
+                gap: 6px;
+                overflow-y: auto; /* Scroll if needed */
+            }
+            
+            .choice-btn {
+                padding: 10px 12px;
+                font-size: 9px;
+                flex-shrink: 0; /* Don't compress buttons */
+            }
+            
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            
+            .game-container {
+                height: 100vh;
+                height: 100dvh; /* Dynamic viewport height for mobile */
+                max-height: none;
+                border-radius: 0;
+                border: none;
+                width: 100%;
+            }
+            
+            .title-screen {
+                padding: 30px 20px;
+            }
+            
+            .pixel-canvas-area {
+                height: 35vh; /* Reduced from 45vh to give more room for dialogue */
+                max-height: 280px; /* Reduced from 320px */
+            }
+            
+            .dialogue-area {
+                flex: 1; /* Take remaining space */
+                min-height: 45vh; /* Increased from 35vh */
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .speaker-name {
+                font-size: 10px;
+            }
+            
+            .dialogue-text {
+                font-size: 9px;
+                flex-shrink: 0;
+            }
+            
+            .choice-buttons {
+                flex: 1; /* Take remaining space in dialogue area */
+                max-height: none; /* Remove height restriction */
+                gap: 6px; /* Reduced gap to fit more */
+                overflow-y: auto; /* Allow scrolling if needed */
+                margin-top: 10px;
+            }
+            
+            .choice-btn {
+                padding: 10px 12px; /* Slightly reduced padding */
+                font-size: 9px; /* Slightly smaller font */
+                /* Make buttons easier to tap on mobile */
+                min-height: 40px; /* Reduced from 44px but still touch-friendly */
+                flex-shrink: 0; /* Prevent button compression */
+            }
+            
+        }
+        
+        /* Very small screens (iPhone SE, etc) */
+        @media (max-width: 375px) {
+            .main-title {
+                font-size: 20px;
+            }
+            
+            .subtitle {
+                font-size: 11px;
+            }
+            
+            .start-button {
+                font-size: 12px;
+                padding: 15px 30px;
+            }
+            
+            .pixel-canvas-area {
+                height: 30vh; /* Even smaller canvas on tiny screens */
+                max-height: 200px;
+            }
+            
+            .dialogue-area {
+                min-height: 50vh; /* More space for dialogue and choices */
+            }
+            
+            .dialogue-text {
+                font-size: 8px;
+                line-height: 1.4;
+            }
+            
+            .choice-btn {
+                font-size: 8px; /* Smaller font to fit more text */
+                padding: 8px 10px; /* Smaller padding */
+                min-height: 36px; /* Still touch-friendly */
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Title Screen -->
+        <div class="title-screen" id="titleScreen">
+            <h1 class="main-title">Flavio's Birthday Quest</h1>
+            <p class="subtitle">A Berlin Mystical Quest</p>
+            <div class="heart">♥</div>
+            <button class="start-button" id="startBtn">Start Adventure</button>
+            <p class="dedication">Happy 35th Birthday Flavio!</p>
+        </div>
+
+        <!-- Game Screen (hidden initially) -->
+        <div class="game-screen" id="gameScreen">
+            <div class="pixel-canvas-area">
+                <canvas id="gameCanvas" width="480" height="320"></canvas>
+            </div>
+            <div class="dialogue-area">
+                <div class="speaker-name" id="speakerName">Flavio</div>
+                <div class="dialogue-text" id="dialogueText">
+                    Welcome to your underwater adventure!
+                </div>
+                <div class="choice-buttons" id="choiceButtons" style="display: none;">
+                    <button class="choice-btn" id="choice1">Choice 1</button>
+                    <button class="choice-btn" id="choice2">Choice 2</button>
+                    <button class="choice-btn" id="choice3">Choice 3</button>
+                </div>
+                <div class="continue-indicator" id="continueIndicator">▼</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="story.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

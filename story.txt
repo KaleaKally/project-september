@@ -1,0 +1,51 @@
+STORY TEMPLATE FOR YOUR BIRTHDAY GAME
+======================================
+
+You can easily customize the story by editing the game.js file.
+Look for the setupSimpleStory() function and modify the scenes.
+
+Current Simple Story Structure:
+-------------------------------
+1. intro -> Introduction scene
+2. scene1 -> Berlin arrival  
+3. scene2 OR scene3 -> Forest or Tavern (based on choice)
+4. scene4 -> Milan arrival
+5. scene5 -> Duomo and crystal
+6. ending -> Final birthday message
+
+How to Customize:
+-----------------
+Each scene has:
+- background: Choose from 'tavern', 'forest', 'berlin', 'milan', 'duomo'
+- character: The name shown in dialogue
+- text: Array of dialogue lines
+- choices: null for linear progression, or array of choice objects
+- next: Name of the next scene
+
+Example Scene:
+-------------
+sceneName: {
+    background: 'milan',
+    character: 'Your Character',
+    text: [
+        "First line of dialogue",
+        "Second line of dialogue"
+    ],
+    choices: [
+        {
+            text: "Choice 1 text",
+            next: 'scene2'
+        },
+        {
+            text: "Choice 2 text", 
+            next: 'scene3'
+        }
+    ]
+}
+
+Tips:
+-----
+- Keep scenes short (2-4 lines of text)
+- The game supports branching paths with choices
+- You can loop back to previous scenes
+- End the story by setting next: 'end'
