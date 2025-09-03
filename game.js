@@ -82,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const priusDriver = new Image();
     priusDriver.src = "public/image/prius-driver.png";
     
+    const priusExit = new Image();
+    priusExit.src = "public/image/prius-exit.png";
+    
     const berlinBackground = new Image();
     berlinBackground.src = "public/image/berlin-background.png";
     
@@ -123,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Track loading
     let imagesLoaded = 0;
-    const totalImages = 37;  // Actual count: 30 individual images + 7 sisyphos backgrounds
+    const totalImages = 38;  // Actual count: 31 individual images + 7 sisyphos backgrounds
     
     function checkAllLoaded() {
         imagesLoaded++;
@@ -157,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mirrorballFighting.onload = checkAllLoaded;
     prius.onload = checkAllLoaded;
     priusDriver.onload = checkAllLoaded;
+    priusExit.onload = checkAllLoaded;
     berlinBackground.onload = checkAllLoaded;
     bonusBackground.onload = checkAllLoaded;
     // Sisyphos backgrounds onload handlers
@@ -454,10 +458,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     sprite = mirrorball;
                 }
             } else if (isAtSuperboss) {
-                // Superboss sprite transition: Prius → Prius with Driver → Prius (driver leaves)
-                if (this.state === 'ENTERING' || this.state === 'IDLE' || this.state === 'DRIVER_EXITING' || 
-                    this.state === 'EXITING' || this.state === 'GONE') {
-                    sprite = prius; // Empty car during entrance, parking, driver exit, and scene exit
+                // Superboss sprite transition: Prius → Prius with Driver → Prius Exit
+                if (this.state === 'ENTERING' || this.state === 'IDLE' || this.state === 'DRIVER_EXITING') {
+                    sprite = prius; // Empty car during entrance, parking, and driver exit
+                } else if (this.state === 'EXITING' || this.state === 'GONE') {
+                    sprite = priusExit; // Special exit sprite when leaving the scene
                 } else {
                     sprite = priusDriver; // Car with driver visible during dialogue
                 }
@@ -948,17 +953,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ctx.restore();
         
-        // Driver exit visual effect for superboss
-        if (isAtSuperboss && BossLifecycle.state === 'DRIVER_EXITING') {
-            // White flash effect to simulate car door opening
-            const flashIntensity = Math.sin(BossLifecycle.timer * 0.3) * 0.3 + 0.2; // Pulsing flash
-            ctx.save();
-            ctx.globalAlpha = flashIntensity;
-            ctx.fillStyle = 'white';
-            // Flash area near car door (left side of car)
-            ctx.fillRect(bossX - 20, actualY, 40, drawHeight);
-            ctx.restore();
-        }
+        // Driver exit visual effect removed - clean sprite transition only
         
         // Add menacing aura (only when fighting)
         if (BossLifecycle.entranceProgress >= 1 && BossLifecycle.state === 'FIGHTING') {
