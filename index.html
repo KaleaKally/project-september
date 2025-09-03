@@ -139,6 +139,33 @@
             justify-content: center;
             align-items: center;
         }
+        
+        .music-control {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #FFD700;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        
+        .music-control:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .music-control span {
+            font-size: 18px;
+            user-select: none;
+        }
 
         #gameCanvas {
             image-rendering: pixelated;
@@ -377,11 +404,14 @@
         <div class="game-screen" id="gameScreen">
             <div class="pixel-canvas-area">
                 <canvas id="gameCanvas" width="480" height="320"></canvas>
+                <!-- Music control icon -->
+                <div class="music-control" id="musicControl">
+                    <span id="musicIcon">🔊</span>
+                </div>
             </div>
             <div class="dialogue-area">
-                <div class="speaker-name" id="speakerName">Flavio</div>
+                <div class="speaker-name" id="speakerName"></div>
                 <div class="dialogue-text" id="dialogueText">
-                    Welcome to your underwater adventure!
                 </div>
                 <div class="choice-buttons" id="choiceButtons" style="display: none;">
                     <button class="choice-btn" id="choice1">Choice 1</button>

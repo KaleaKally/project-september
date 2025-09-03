@@ -27,24 +27,24 @@ const gameStory = {
             dialogues: [
                 {
                     speaker: 'Kalea',
-                    text: "Flavio! Listen carefully - Berlin's mystical dimension has been corrupted! On your 35th birthday, you're the only one who can save it!",
+                    text: "Flavio! Listen carefully - Berlin's mystical energy has been corrupted! You're the only one who can save it!",
                     animation: 'mermaid_appear'
                 },
                 {
                     speaker: 'Kalea',
-                    text: "Four Sacred Gems have been stolen by the nightlife guardians. Without them, Berlin's party spirit will disappear forever!",
+                    text: "Four Sacred Rocks have been stolen by the nightlife guardians. Without them, Berlin's party spirit will disappear forever!",
                 },
                 {
                     speaker: 'Kalea',
-                    text: "Your mission: Retrieve the gems from Berlin's legendary clubs. The fate of the city's soul depends on you!",
+                    text: "Your mission: Retrieve the rocks from Berlin's legendary clubs. The fate of the city's soul depends on you!",
                 },
                 {
                     speaker: 'Flavio',
-                    text: "Four boss battles across my favorite clubs? On my birthday? This is the best gift ever! I accept the quest!"
+                    text: "Four boss battles across some of my favorite clubs? I was planning an epic club crawl anyway - might as well save Berlin while I'm at it."
                 },
                 {
                     speaker: 'Kalea',
-                    text: "Be careful, my hero! The food monsters won't go easy on you. I'll guide you when I can. Now go! ❤️",
+                    text: "Be careful, my raven hero! The guardians won't go easy on you. Good luck. Now go! 💙",
                     nextScene: 'visionaere_entrance'
                 }
             ]
@@ -118,52 +118,52 @@ const gameStory = {
             dialogues: [
                 {
                     speaker: 'Narrator',
-                    text: "Club der Visionaere. The floating clubhouse on the canal. Your journey begins where Berlin's underground was born."
+                    text: "Club der Visionaere. A wooden raft of dreams on the canal. Here, the river flows slow, the bass is a gentle hum, and time simply melts away."
                 },
                 {
                     speaker: 'Red Ampelmannchen',
-                    text: "HALT! FLAVIO! No crossing into the sacred realm of CDV without permission!",
+                    text: "Halt, Flavio! You cannot pass! I am the gatekeeper of smooth vibes and relaxed evenings. I am the one true ruler of the East Side, and my gaze is fixed on you!",
                     character: 'monster'
                 },
                 {
                     speaker: 'Flavio',
-                    text: "You're just a traffic light! I've jaywalked past you a thousand times. You can't stop me!"
+                    text: "You're just a traffic light! I've jaywalked past you a thousand times. A little red man with a hat isn't going to stop me."
                 },
                 {
                     speaker: 'Red Ampelmannchen',
-                    text: "It's Sunday afternoon at CDV. The canal is sparkling. What's the perfect vibe?",
+                    text: "Alright, Flavio. A simple test. You've just arrived at CDV on a warm afternoon. What's the first thing you do to blend in?",
                     choices: [
                         {
-                            text: "Mate in hand, sunglasses on, pretending Monday doesn't exist",
-                            response: "YES! You understand the sacred Sunday ritual! Time stops at CDV!"
+                            text: "Find a nice spot on the deck, sip a Fritz Cola, and pretend the world doesn't exist.",
+                            response: "YES! A master of the chill zone! That's the true CDV way—where every minute is a mini-vacation!"
                         },
                         {
-                            text: "Dancing barefoot on the wooden deck like nobody's watching",
-                            response: "Beautiful! That's the CDV spirit - freedom and joy by the water!"
+                            text: "Grab a beer and find a stranger to talk about everything with.",
+                            response: "The magic of CDV! Where friendships are born over beer and good conversation!"
                         },
                         {
-                            text: "Sharing a Späti beer with strangers who become best friends",
-                            response: "The magic of CDV! Where friendships are born over cheap beer and good music!"
+                            text: "Head straight under the speakers to feel the music properly.",
+                            response: "A true connoisseur! You know the music sounds better here than in the middle of the crowd!"
                         }
                     ]
                 },
                 {
                     speaker: 'Red Ampelmannchen',
-                    text: "Final test! You're leaving CDV just after sunset. What proves you're a true regular?",
+                    text: "Final test, Flavio! The sun has set and the fairy lights are twinkling. What's the secret sign that you've truly understood this place?",
                     choices: [
                         {
-                            text: "You know which U-Bahn stairs to avoid because they smell like piss",
-                            response: "HAHAHA! Only a true veteran knows the Schlesisches Tor survival guide! The rock is yours!",
+                            text: "You kept your phone in your pocket without needing stickers",
+                            response: "YES! You respect the unspoken rule of this club! The memory is in your soul, not on your camera roll. The rock is yours!",
                             givesRock: 'visionaere'
                         },
                         {
-                            text: "The boat party crew waves at you from the canal",
-                            response: "You're part of the CDV family! When the boats know you, you've made it! Take the rock!",
+                            text: "You've completely lost track of time and the toilet queue got long",
+                            response: "Haha, a true Berliner! You know why those bathroom lines take forever - and I'm not talking about the queue. The rock is yours, you seasoned veteran!",
                             givesRock: 'visionaere'
                         },
                         {
-                            text: "The DJ plays your request without you even asking anymore",
-                            response: "Nice try, but any tourist can make requests! You need to prove you're REALLY part of the family!",
+                            text: "You push your way to the front, ready to sweat",
+                            response: "Are you fucking kidding me?! This isn't Berghain, you sweaty tourist! CDV is about chill vibes, not aggressive pushing! Go back to whatever hell-hole techno bunker you crawled out of!",
                             givesRock: false
                         }
                     ]
@@ -181,59 +181,59 @@ const gameStory = {
             dialogues: [
                 {
                     speaker: 'Narrator',
-                    text: "Kater Blau, your Sunday home. The wooden deck creaks with memories of countless sunrises."
+                    text: "Kater Blau. A theatrical wonderland on the Spree. The music is a pulse, the confetti is a promise, and every step is a new adventure."
                 },
                 {
                     speaker: 'Currywurst',
-                    text: "FLAVIO! We meet again! Every Sunday morning you devour my brothers at Curry36!",
+                    text: "FLAVIO! Stop right there! You cannot enter the Kater's domain! I am the patron saint of late-night regrets and the demon of your 4 AM cravings. I am the reason your wallet is empty every Monday morning!",
                     character: 'monster'
                 },
                 {
                     speaker: 'Flavio',
-                    text: "Currywurst demon! You've haunted my 4 AM cravings for too long. This ends now!"
+                    text: "You're just a demon made of sausage and ketchup! I've conquered far bigger monsters than you. I'm here for the rock, not your greasy nonsense."
                 },
                 {
                     speaker: 'Currywurst',
-                    text: "Answer me this, party warrior: It's hour 30 of dancing. What keeps a true Berliner going?",
+                    text: "Before you face the final test, I want to know... what is the most important rule of the Kater?",
                     choices: [
                         {
-                            text: "Bass is my spine now",
-                            response: "Becoming one with the subwoofer? Respect. Your chiropractor won't, but I do!"
+                            text: "Always remember where the chill-out areas are, because you're going to need them.",
+                            response: "A wise choice! The marathon dancer knows to pace themselves. You understand how this game is played!"
                         },
                         {
-                            text: "Friends won't let me leave",
-                            response: "Ah yes, the 'just one more song' cult. Stockholm syndrome never sounded so good!"
+                            text: "You've got to dance like nobody's watching, no matter what.",
+                            response: "The ultimate freedom! That's the Kater spirit of uninhibited joy! Now get out there and shine!"
                         },
                         {
-                            text: "Kenshiro is by my side",
-                            response: "Ah yes, legendary energy! You could dance for another 30 hours with that power!"
+                            text: "Never use your phone for photos, only for finding your lost friends.",
+                            response: "Excellent. You respect the sacred 'no photos' rule. The memory is in your soul, not on your camera roll!"
                         }
                     ]
                 },
                 {
                     speaker: 'Currywurst',
-                    text: "Final test at Kater Blau! The DJ is reading the crowd. What journey should the music take?",
+                    text: "Alright, Flavio. You survived the Kater Blau birthday party, a celebration so strange and beautiful. What is a sign that you truly mastered the pickle party?",
                     choices: [
                         {
-                            text: "Deeper and darker, into the void",
-                            response: "Too dark, too soon! The crowd needs to breathe before diving that deep!",
+                            text: "You found the secret restaurant and then devoured a delicious plate of mushrooms and salmon.",
+                            response: "HAHA! Yes! You found the one meal that made sense in a world of nonsense! That kind of wisdom is priceless. Take the rock!",
+                            givesRock: 'katerBlau'
+                        },
+                        {
+                            text: "You managed to hitch a ride on the Gurken-Mobile, and it took you on a magical tour of the club.",
+                            response: "Unbelievable! You rode the Gurken-Mobile! That's a sign of true favor from the spirit of the Kater. Take the rock!",
+                            givesRock: 'katerBlau'
+                        },
+                        {
+                            text: "You saw a giant pickle, got scared and ran away like a cat.",
+                            response: "You ran from a pickle? A pickle! No, no, no. You clearly didn't understand the spirit of the party. Come back when you're ready to face your fears. The rock is not for you!",
                             givesRock: false
-                        },
-                        {
-                            text: "Higher and lighter, toward transcendence",
-                            response: "Lift the spirits! The sunrise deserves celebration!",
-                            givesRock: 'katerBlau'
-                        },
-                        {
-                            text: "Waves of emotion, peaks and valleys",
-                            response: "The natural flow! Like the river itself!",
-                            givesRock: 'katerBlau'
                         }
                     ]
                 },
                 {
                     speaker: 'Narrator',
-                    text: "The Currywurst explodes into curry-scented smoke! The Rock of Sunrise Magic appears! ✨",
+                    text: "The Currywurst demon dissolves into a cloud of paprika-scented smoke! The Rock of Surreal Joy appears! ✨",
                     nextScene: 'heideglühen_entrance'
                 }
             ]
@@ -244,59 +244,59 @@ const gameStory = {
             dialogues: [
                 {
                     speaker: 'Narrator',
-                    text: "Hidden in Wedding behind wooden fences, you find Heideglühen - Berlin's cozy forest rave cabin..."
+                    text: "Heideglühen. Hidden in Wedding, you discover Berlin's most enchanting secret - where industrial art meets human connection."
                 },
                 {
                     speaker: 'Mirrorball',
-                    text: "Welcome to our family's house party! Under the glass roof, we dance from Saturday afternoon BBQ until Sunday evening!",
+                    text: "Welcome to our spinning sanctuary! Here, house music flows while souls circle together on magical carousels!",
                     character: 'mirrorball'
                 },
                 {
                     speaker: 'Flavio',
-                    text: "This wooden cabin feels so different from the concrete techno temples. It's like a secret forest hideaway!"
+                    text: "These industrial carousels are incredible! I've never seen anything like this - it's like a steampunk dream where the furniture dances with you."
                 },
                 {
                     speaker: 'Mirrorball',
-                    text: "You've found our secret garden party! But first, tell me - it's Saturday afternoon BBQ time. What's your move?",
+                    text: "Before you can earn my trust, tell me - you've just discovered our rotating platforms for the first time. What's your instinct?",
                     choices: [
                         {
-                            text: "Grab a beer and help with the grill like family",
-                            response: "Yes! That's the Heideglühen spirit - we're all family here under the trees!"
+                            text: "Find a quiet carousel in the corner and enjoy the gentle spinning motion alone",
+                            response: "Perfect! Sometimes the carousels offer solitude and reflection. You understand that connection comes in many forms."
                         },
                         {
-                            text: "Find the perfect hammock spot and vibe to the ambient sounds",
-                            response: "You understand our forest magic! Sometimes the best dancing happens in stillness."
+                            text: "Sit down carefully and let the carousel bring me into conversation with strangers",
+                            response: "YES! You understand the sacred ritual! These carousels are matchmakers for lost souls seeking connection."
                         },
                         {
-                            text: "Start a spontaneous dance circle in the garden",
-                            response: "Beautiful! You bring the party energy that makes our garden come alive!"
+                            text: "Stand and watch first to understand the rhythm before joining",
+                            response: "Wise! You respect the delicate dance of social rotation. The carousels reward those who observe before they engage."
                         }
                     ]
                 },
                 {
                     speaker: 'Mirrorball',
-                    text: "Now for the real test - what makes Heideglühen different from Berlin's other clubs?",
+                    text: "Final test, Flavio! What makes Heideglühen truly special?",
                     choices: [
                         {
-                            text: "It's just another tourist trap after Berghain",
-                            response: "WRONG! Tourists can't even find us - we keep our location secret from those rejected at Berghain!",
-                            givesRock: false
-                        },
-                        {
-                            text: "House music, BBQ in the garden, and family vibes that last all weekend",
-                            response: "YES! You understand our cozy forest magic! Take the Rock of Sacred Fire!",
+                            text: "It's intimate and hidden - only locals know this secret, keeping tourists away",
+                            response: "YES! Our secrecy protects the magic! True Berlin gems stay hidden from the masses! Take the Rock of Spinning Souls!",
                             givesRock: 'heideglühen'
                         },
                         {
-                            text: "Expensive bottle service and VIP tables",
-                            response: "Never! We're about community, not commerce. This is a family gathering, not a business!",
+                            text: "It's basically just Berghain with better furniture",
+                            response: "Blasphemy! We're the opposite of aggressive techno culture! This is about connection, not confrontation!",
                             givesRock: false
+                        },
+                        {
+                            text: "It's the only place where strangers become friends while gently spinning together",
+                            response: "PERFECT! You understand our beautiful magic - human connection in motion! Take the rock!",
+                            givesRock: 'heideglühen'
                         }
                     ]
                 },
                 {
                     speaker: 'Narrator',
-                    text: "The Mirrorball shatters into a thousand sparkling fragments! The third rock, the Rock of Sacred Fire, appears! ✨",
+                    text: "The Mirrorball begins to rotate faster and faster, reflecting light across the spinning carousels until it explodes into stardust! The Rock of Spinning Souls appears, still gently rotating! ✨",
                     nextScene: 'sisyphos_entrance'
                 }
             ]
@@ -307,34 +307,34 @@ const gameStory = {
             dialogues: [
                 {
                     speaker: 'Narrator',
-                    text: "As you stumble out of the clubs, a white Prius pulls up with Bolt on the side. The window rolls down..."
+                    text: "You're missing some rocks but the sun is just starting to rise, and your feet are screaming. You call a Bolt, and the car that pulls up feels like the final boss of the night."
                 },
                 {
                     speaker: 'Bolt Driver',
-                    text: "Get in! I know where you're going - but first, we need to talk about your Berlin education!",
+                    text: "Get in. I know that look. You think you've seen everything, but you haven't faced me. I am the final gatekeeper of the Berlin night.",
                     character: 'superboss'
                 },
                 {
                     speaker: 'Flavio',
-                    text: "A Bolt driver? Are you going to judge my nightlife choices too?"
+                    text: "You're not a final boss. You're just my sweet, sweet ride to a bed and save me from the Berlin walk of shame."
                 },
                 {
-                    speaker: 'Bolt Driver', 
-                    text: "Listen kid, I've driven every party tourist, club legend, and burnt-out raver in this city. I can see you're missing some rocks from your Berlin education. Let me help you complete the collection!",
+                    speaker: 'Bolt Driver',
+                    text: "I've picked up thousands of people just like you. I know the look in their eyes and the song in their hearts. What is the one thing that proves to me you've had a perfect night?",
                     choices: [
                         {
-                            text: "I'm still learning Berlin's ways",
-                            response: "Humility! That's rare in tourists. Here, take what you need - persistence counts for something!",
+                            text: "You're still in the middle of a profound conversation with your friend that you started on the dance floor.",
+                            response: "The night's best moments happen in the car ride home. You've earned your wisdom and your friendships. The remaining sacred rocks are yours!",
                             givesRock: 'redemption'
                         },
                         {
-                            text: "Every wrong answer taught me something",
-                            response: "Ah, a philosopher! Mistakes are Berlin's greatest teachers. Here are your missing rocks!",
+                            text: "You're already planning where to get a kebab or pizza.",
+                            response: "HAHA! The mark of a true veteran. The ritual of the night is complete only when the final meal is consumed. The remaining sacred rocks are yours!",
                             givesRock: 'redemption'
                         },
                         {
-                            text: "Berlin is harder than I expected",
-                            response: "Finally! Someone who admits it! Honesty deserves rewards. Take these rocks, you've earned them!",
+                            text: "You've completely lost track of time, but you know you're on the way home.",
+                            response: "When time ceases to exist, you know you've been in the right place. That's the real magic. The remaining sacred rocks are yours!",
                             givesRock: 'redemption'
                         }
                     ]
@@ -352,43 +352,21 @@ const gameStory = {
             dialogues: [
                 {
                     speaker: 'Kalea',
-                    text: "FLAVIO! My hero! You did it! You defeated all of Berlin's nightlife guardians and collected all four rocks!",
+                    text: "FLAVIO! My raven hero! You did it! You defeated all of Berlin's nightlife guardians and collected all four rocks!",
                     animation: 'rocks_combine'
                 },
                 {
                     speaker: 'Flavio',
-                    text: "I did it for us, amore! And maybe also because those monsters know all my drunk food orders..."
+                    text: "Well, that was intense! All those nights exploring Berlin finally paid off in the most unexpected way!"
                 },
                 {
                     speaker: 'Kalea',
-                    text: "Let me see how Berlin has shaped you through your choices... *the gems glow, revealing your party spirit*"
-                },
-                {
-                    speaker: 'Kalea',
-                    text: "My love, you've conquered Berlin's nightlife! Now make your birthday wish - what does your heart desire?",
-                    choices: [
-                        {
-                            text: "A functioning sleep schedule (BORING but practical)",
-                            response: "The gems laugh at you. Sleep schedule? In BERLIN? Happy birthday anyway, you optimistic fool! 🎂"
-                        },
-                        {
-                            text: "The ability to find Berghain's actual entrance",
-                            response: "The gems reveal the secret! Plot twist: There IS no entrance, it's all a collective hallucination! Mind = blown!"
-                        },
-                        {
-                            text: "To remember what happened last weekend",
-                            response: "The gems restore your memory! Oh no... OH NO! Some things were better forgotten! Quick, take it back!"
-                        }
-                    ]
+                    text: "You've grown so much, my love. Life shaped you, but you shaped it right back with your choices and courage."
                 },
                 {
                     speaker: 'Kalea',
                     text: "HAPPY 35th BIRTHDAY, my darling Flavio! 🎉 You're perfect just the way you are!",
                     animation: 'celebration'
-                },
-                {
-                    speaker: 'Kalea',
-                    text: "Now come back to reality - I made your favorite breakfast and have SO many birthday surprises planned! Ti amo! ♥"
                 }
             ]
         }

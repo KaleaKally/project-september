@@ -114,6 +114,13 @@ document.addEventListener('DOMContentLoaded', () => {
         sisyphosBackgrounds.push(bg);
     }
     
+    // Background music setup
+    const backgroundMusic = new Audio('public/audio/Pixelated Love.mp3');
+    backgroundMusic.loop = true;
+    backgroundMusic.volume = 0.6; // 60% volume
+    backgroundMusic.playbackRate = 0.7; // Play at 70% speed (slower)
+    let musicPlaying = false;
+
     // Track loading
     let imagesLoaded = 0;
     const totalImages = 37;  // Actual count: 30 individual images + 7 sisyphos backgrounds
@@ -1738,29 +1745,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Mark this dialogue as being typed
                 lastTypewriterDialogueIndex = dialogueKey;
                 
-                // Set invisible placeholder text (same color as background)
-                dialogueText.textContent = "Typing...";
-                dialogueText.style.color = '#1a2a4a'; // Same as dialogue area background - invisible
-                dialogueText.style.textShadow = 'none'; // Remove shadow so it's truly invisible
-                continueIndicator.style.display = 'none'; // Hide indicator during typing
+                // Clear text and hide continue indicator
+                continueIndicator.style.display = 'none';
                 
-                // After brief pause, start typewriter with white text
-                typewriterTimeoutId = setTimeout(() => {
-                    dialogueText.style.color = '#FFFFFF'; // Switch to white for actual text
-                    dialogueText.style.textShadow = '1px 1px 0 #000'; // Restore shadow for readability
-                    typewriterEffect(dialogue.text, () => {
-                        continueIndicator.style.display = 'block'; // Show when done
-                        typewriterTimeoutId = null; // Clear the timeout ID
-                    });
-                }, 100); // 100ms delay for rendering
+                // Start typewriter immediately (no complex color switching)
+                typewriterEffect(dialogue.text, () => {
+                    continueIndicator.style.display = 'block'; // Show when done
+                    typewriterTimeoutId = null; // Clear the timeout ID
+                });
             } else {
                 console.log('Dialogue already typed, ensuring it remains displayed correctly');
                 // Dialogue was already typed, only update if text is different
                 if (dialogueText.textContent !== dialogue.text) {
                     console.log('Text content differs, updating without typewriter');
                     dialogueText.textContent = dialogue.text;
-                    dialogueText.style.color = '#FFFFFF'; // Ensure text is white
-                    dialogueText.style.textShadow = '1px 1px 0 #000'; // Ensure shadow is present
                 }
                 // Always ensure indicator is visible
                 if (continueIndicator.style.display !== 'block') {
@@ -2149,6 +2147,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Only show dialogue once
                 if (!dialogueStarted) {
                     dialogueStarted = true;
+                    console.log('=== STARTING FIRST DIALOGUE ===');
+                    console.log('currentDialogueIndex:', currentDialogueIndex);
+                    console.log('currentScene.dialogues[0]:', currentScene.dialogues[0]);
                     showDialogue(); // Start dialogue
                 }
             }
@@ -2162,19 +2163,57 @@ document.addEventListener('DOMContentLoaded', () => {
         // No need to call animate() here - it's already running
     }
     
+    // Music control functionality
+    const musicControl = document.getElementById('musicControl');
+    const musicIcon = document.getElementById('musicIcon');
+    
+    function startMusic() {
+        backgroundMusic.play().catch(e => {
+            console.log('Music autoplay prevented by browser:', e);
+        });
+        musicPlaying = true;
+        musicIcon.textContent = '🔊';
+    }
+    
+    function toggleMusic() {
+        if (musicPlaying) {
+            backgroundMusic.pause();
+            musicPlaying = false;
+            musicIcon.textContent = '🔇';
+        } else {
+            backgroundMusic.play().catch(e => {
+                console.log('Music play failed:', e);
+            });
+            musicPlaying = true;
+            musicIcon.textContent = '🔊';
+        }
+    }
+    
+    musicControl.addEventListener('click', toggleMusic);
+
     // Start game - begin story with animation
     startBtn.addEventListener('click', () => {
         console.log('Start button clicked!'); // Debug log
+        console.log('Initial currentDialogueIndex:', currentDialogueIndex);
         titleScreen.style.display = 'none';
         gameScreen.style.display = 'flex';
         animationActive = true; // Prevent normal rendering during animation
         animate(); // Start the animation loop
         runStartAnimation(); // Start with animation
+        
+        // Start background music
+        startMusic();
     });
     
     // Progress dialogue on click or keypress
     document.addEventListener('click', (e) => {
         if (gameScreen.style.display !== 'flex') return;
+        
+        // Block all clicks during start animation
+        if (animationActive && !animationCompleted) {
+            console.log('Start animation in progress, ignoring click');
+            return;
+        }
         
         // Block all clicks during rock transitions - must be uninterruptible
         if (transitionActive) {
@@ -2197,7 +2236,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Advance dialogue
+        console.log('=== ADVANCING DIALOGUE ===');
+        console.log('Before increment:', currentDialogueIndex);
         currentDialogueIndex++;
+        console.log('After increment:', currentDialogueIndex);
         if (currentDialogueIndex >= currentScene.dialogues.length) {
             // Check if we should move to next scene
             const lastDialogue = currentScene.dialogues[currentScene.dialogues.length - 1];
