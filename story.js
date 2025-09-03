@@ -55,59 +55,59 @@ const gameStory = {
             dialogues: [
                 {
                     speaker: 'Narrator',
-                    text: "Sisyphos. The final temple. Your home away from home for the past decade."
+                    text: "Sisyphos. Your sanctuary. After a decade of Friday-to-Monday marathons, this industrial festival wonderland still feels like home."
                 },
                 {
                     speaker: 'The Bouncer',
-                    text: "FLAVIO! I know you... Happy birthday, mate! But even regulars must prove themselves for the final gem!",
+                    text: "FLAVIO! I know you... Happy birthday, mate! But even regulars must prove themselves for the final rock!",
                     character: 'monster'
                 },
                 {
                     speaker: 'Flavio',
-                    text: "Bouncer! After all these years, you still make me nervous! But I'm ready for the final test!"
+                    text: "Bouncer! After all these years, you don't make me nervous anymore! I'm ready for the final test!"
                 },
                 {
                     speaker: 'The Bouncer',
-                    text: "It's Monday 6 AM at Sisyphos. You've been here since Saturday. What's going through your head?",
+                    text: "It's Sunday afternoon. You've been here since Friday. Where do you find yourself in this festival maze?",
                     choices: [
                         {
-                            text: "I should probably check my phone... nah, bad idea",
-                            response: "Smart choice! Reality can wait. The void between Saturday and Tuesday is sacred!"
+                            text: "You're dancing barefoot on the artificial beach, sand between your toes",
+                            response: "Ah, the beach! Where Berlin ravers become festival children! That sand has healing powers, I swear!"
                         },
                         {
-                            text: "Is this heaven or am I just really dehydrated?",
-                            response: "Both! Dehydrated enlightenment is the Sisyphos state of being!"
+                            text: "You're chilling in Wintergarten with deep house and sunshine streaming in",
+                            response: "The groovy sanctuary! Where house music meets vitamin D - the perfect balance for marathon dancers!"
                         },
                         {
-                            text: "One more song and I'll leave... I've said that 200 times",
-                            response: "The eternal Sisyphos lie! We've all been trapped by 'one more song' for decades!"
+                            text: "You're eating pizza outside the tea house, talking to some new friends",
+                            response: "The perfect observer spot! Nothing beats Sisyphos pizza while people-watching the beautiful madness around you!"
                         }
                     ]
                 },
                 {
                     speaker: 'The Bouncer',
-                    text: "Final question - after all these years in Berlin's underground, tell me - what's the TRUE spirit of Sisyphos?",
+                    text: "Final question - after ten years as my regular, what makes Sisyphos YOUR home?",
                     choices: [
                         {
-                            text: "Berghain for people who smile",
-                            response: "Did you just... compare us to... I'm too tired for this. No gem for you!",
+                            text: "It's a festival that never ends, where every person tells a different story",
+                            response: "YES! From beach to Hammahalle, from Wintergarten to the chill zones - it's not just a club, it's a world of friends and love! Take the rock!",
+                            givesRock: 'sisyphos'
+                        },
+                        {
+                            text: "It's the perfect place to meet new friends to share a Lady and the Tramp moment",
+                            response: "EXACTLY! The spontaneous connections, the shared experiences! You understand what makes this place magical! The rock is yours!",
+                            givesRock: 'sisyphos'
+                        },
+                        {
+                            text: "The DJs here are way better than anywhere else in Berlin",
+                            response: "Come on, Flavio! After ten years you think it's just about the music? You're missing the bigger picture - it's about the community, the experience, the journey!",
                             givesRock: false
-                        },
-                        {
-                            text: "Monday is optional, reality isn't",
-                            response: "YES! You get it! Time is fake, jobs are temporary, but the party is eternal! Take the gem!",
-                            givesRock: 'sisyphos'
-                        },
-                        {
-                            text: "Home for lost souls",
-                            response: "Dark but accurate! We're all beautifully broken here. The gem is yours, you glorious mess!",
-                            givesRock: 'sisyphos'
                         }
                     ]
                 },
                 {
                     speaker: 'The Bouncer',
-                    text: "You've earned the Gem of Eternal Dance! Now get in there... but seriously, go home after this. You smell like four days of bad decisions.",
+                    text: "You've earned the Rock of Eternal Festival! Now get back to your artificial beach, my friend... the festival is calling you home!",
                     nextScene: 'dynamic'
                 }
             ]
@@ -134,15 +134,15 @@ const gameStory = {
                     text: "Alright, Flavio. A simple test. You've just arrived at CDV on a warm afternoon. What's the first thing you do to blend in?",
                     choices: [
                         {
-                            text: "Find a nice spot on the deck, sip a Fritz Cola, and pretend the world doesn't exist.",
+                            text: "You find a nice spot on the deck, sip a Fritz Cola, and pretend the world doesn't exist.",
                             response: "YES! A master of the chill zone! That's the true CDV way—where every minute is a mini-vacation!"
                         },
                         {
-                            text: "Grab a beer and find a stranger to talk about everything with.",
+                            text: "You grab a beer and find a stranger to talk about everything with.",
                             response: "The magic of CDV! Where friendships are born over beer and good conversation!"
                         },
                         {
-                            text: "Head straight under the speakers to feel the music properly.",
+                            text: "You head straight under the speakers to feel the music properly.",
                             response: "A true connoisseur! You know the music sounds better here than in the middle of the crowd!"
                         }
                     ]
@@ -197,7 +197,7 @@ const gameStory = {
                     text: "Before you face the final test, I want to know... what is the most important rule of the Kater?",
                     choices: [
                         {
-                            text: "Always remember where the chill-out areas are, because you're going to need them.",
+                            text: "You always remember where the chill-out areas are, because you're going to need them.",
                             response: "A wise choice! The marathon dancer knows to pace themselves. You understand how this game is played!"
                         },
                         {
@@ -205,7 +205,7 @@ const gameStory = {
                             response: "The ultimate freedom! That's the Kater spirit of uninhibited joy! Now get out there and shine!"
                         },
                         {
-                            text: "Never use your phone for photos, only for finding your lost friends.",
+                            text: "You never use your phone for photos, only for finding your lost friends.",
                             response: "Excellent. You respect the sacred 'no photos' rule. The memory is in your soul, not on your camera roll!"
                         }
                     ]
@@ -260,15 +260,15 @@ const gameStory = {
                     text: "Before you can earn my trust, tell me - you've just discovered our rotating platforms for the first time. What's your instinct?",
                     choices: [
                         {
-                            text: "Find a quiet carousel in the corner and enjoy the gentle spinning motion alone",
+                            text: "You find a quiet carousel in the corner and enjoy the gentle spinning motion alone",
                             response: "Perfect! Sometimes the carousels offer solitude and reflection. You understand that connection comes in many forms."
                         },
                         {
-                            text: "Sit down carefully and let the carousel bring me into conversation with strangers",
+                            text: "You sit down carefully and let the carousel bring you into conversation with strangers",
                             response: "YES! You understand the sacred ritual! These carousels are matchmakers for lost souls seeking connection."
                         },
                         {
-                            text: "Stand and watch first to understand the rhythm before joining",
+                            text: "You stand and watch first to understand the rhythm before joining",
                             response: "Wise! You respect the delicate dance of social rotation. The carousels reward those who observe before they engage."
                         }
                     ]
@@ -365,7 +365,7 @@ const gameStory = {
                 },
                 {
                     speaker: 'Kalea',
-                    text: "HAPPY 35th BIRTHDAY, my darling Flavio! 🎉 You're perfect just the way you are!",
+                    text: "HAPPY 35th BIRTHDAY, my darling Flavio! 🎉",
                     animation: 'celebration'
                 }
             ]

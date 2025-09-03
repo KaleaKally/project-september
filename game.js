@@ -187,6 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let ravenFlightTime = 0; // For natural flight pattern
     let ravenInitialized = false; // Track if raven has been positioned
     
+    // Confetti animation variables
+    let confettiParticles = [];
+    let confettiActive = false;
+    
     // Boss variables (legacy - will be replaced by BossLifecycle)
     let bossX = 0;
     let bossY = 0;
@@ -293,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const startX = 450;
                         const startY = 100;
                         const targetX = 280;
-                        const targetY = 176;
+                        const targetY = 190;
                         
                         // Car-like curved trajectory from top-right to center
                         const progress = this.entranceProgress;
@@ -450,11 +454,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     sprite = mirrorball;
                 }
             } else if (isAtSuperboss) {
-                // Superboss sprite transition: Prius → Prius with Driver
-                if (this.state === 'ENTERING' || this.state === 'IDLE' || this.state === 'DRIVER_EXITING') {
-                    sprite = prius; // Empty car during entrance, parking, and driver exit
+                // Superboss sprite transition: Prius → Prius with Driver → Prius (driver leaves)
+                if (this.state === 'ENTERING' || this.state === 'IDLE' || this.state === 'DRIVER_EXITING' || 
+                    this.state === 'EXITING' || this.state === 'GONE') {
+                    sprite = prius; // Empty car during entrance, parking, driver exit, and scene exit
                 } else {
-                    sprite = priusDriver; // Car with driver visible after exit
+                    sprite = priusDriver; // Car with driver visible during dialogue
                 }
             } else {
                 // Default fallback
@@ -1008,12 +1013,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 transitionTimer = 0;
             }
         } else if (transitionPhase === 2) {
-            // Phase 2: Gem pulses for a moment (extended for reading time)
-            if (transitionTimer > 180) {  // 3 seconds instead of 1
-                // Move to glow transition
-                transitionPhase = 3;
-                transitionTimer = 0;
-            }
+            // Phase 2: Gem pulses - wait for user click to continue
+            // Just keep pulsing, no auto-advance
+            // User click will advance to phase 3
         } else if (transitionPhase === 3) {
             // Phase 3: Screen glow transition
             glowRadius = Math.min(500, transitionTimer * 5);  // Slower glow expansion
@@ -1079,16 +1081,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Next scene dialogue started automatically');
             }
         } else if (transitionPhase === 5) {
-            // Phase 5: Dark failure transition - boss rejects player
-            
+            // Phase 5: Dark failure transition - wait for user click to continue
             // Dark glow spreads from boss position
-            const darkGlow = Math.min(1, transitionTimer / 120); // Same duration as light
+            const darkGlow = Math.min(1, transitionTimer / 120); // Build up glow over 2 seconds
             glowRadius = darkGlow * 300; // Smaller than success glow
             
-            if (transitionTimer > 120) {
-                transitionPhase = 6; // Move to dark scene transition
-                transitionTimer = 0;
-            }
+            // Once glow is fully built, wait for user click (no auto-advance)
+            // User click will advance to phase 6
         } else if (transitionPhase === 6) {
             // Phase 6: Dark scene transition
             sceneTransitionProgress = Math.min(1, transitionTimer / 120); // Same duration as light
@@ -1613,6 +1612,12 @@ document.addEventListener('DOMContentLoaded', () => {
         lastHeroX = heroX;
         lastHeroY = heroY;
         
+        // Update confetti animation
+        updateConfetti();
+        
+        // Draw confetti on top of everything
+        drawConfetti();
+        
         // Update frame counter for raven animation
         frameCount++;
         
@@ -1866,15 +1871,18 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Handle failed rock attempts with dark transition (only on final question)
             if (!choice.givesRock) {
-                console.log('Starting dark failure transition for final question:', gameStory.currentLocation);
-                // Start dark transition for failed attempts
-                transitionActive = true;
-                transitionPhase = 5; // New phase for dark transitions
-                transitionTimer = 0;
+                console.log('Starting dark failure sequence for final question:', gameStory.currentLocation);
                 
-                // Hide continue indicator during transition
-                continueIndicator.style.display = 'none';
-                console.log('Dark transition started - showing failure feedback');
+                // Hide choice buttons and show continue indicator for reading the response
+                choiceButtons.style.display = 'none';
+                continueIndicator.style.display = 'block';
+                waitingForChoice = false;
+                
+                // Set a flag to indicate we're waiting to start dark transition
+                // The click handler will check for this flag
+                window.pendingDarkTransition = true;
+                
+                console.log('Dark failure response shown - waiting for user click to start transition');
             }
         }
         
@@ -1993,6 +2001,63 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillText(clubName, startX + 5, startY + 12);
     }
     
+    // Confetti system
+    function createConfetti() {
+        confettiParticles = [];
+        const colors = ['#FFD700', '#FF69B4', '#00CED1', '#98FB98', '#FFA500', '#DA70D6'];
+        
+        for (let i = 0; i < 50; i++) {
+            confettiParticles.push({
+                x: Math.random() * canvas.width,
+                y: -10,
+                vx: (Math.random() - 0.5) * 4,
+                vy: Math.random() * 2 + 1,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                size: Math.random() * 8 + 4,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.2
+            });
+        }
+        confettiActive = true;
+    }
+    
+    function updateConfetti() {
+        if (!confettiActive) return;
+        
+        for (let i = confettiParticles.length - 1; i >= 0; i--) {
+            const particle = confettiParticles[i];
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+            particle.rotation += particle.rotationSpeed;
+            particle.vy += 0.1; // gravity
+            
+            // Remove particles that fall off screen
+            if (particle.y > canvas.height + 20) {
+                confettiParticles.splice(i, 1);
+            }
+        }
+        
+        // Stop confetti when all particles are gone
+        if (confettiParticles.length === 0) {
+            confettiActive = false;
+        }
+    }
+    
+    function drawConfetti() {
+        if (!confettiActive) return;
+        
+        ctx.save();
+        for (const particle of confettiParticles) {
+            ctx.save();
+            ctx.translate(particle.x, particle.y);
+            ctx.rotate(particle.rotation);
+            ctx.fillStyle = particle.color;
+            ctx.fillRect(-particle.size/2, -particle.size/2, particle.size, particle.size);
+            ctx.restore();
+        }
+        ctx.restore();
+    }
+
     function handleAnimation(animationType) {
         switch(animationType) {
             case 'mermaid_appear':
@@ -2006,7 +2071,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Show gems floating together
                 break;
             case 'celebration':
-                // Confetti or particle effects
+                createConfetti();
                 break;
         }
     }
@@ -2194,12 +2259,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Start game - begin story with animation
     startBtn.addEventListener('click', () => {
         console.log('Start button clicked!'); // Debug log
-        console.log('Initial currentDialogueIndex:', currentDialogueIndex);
         titleScreen.style.display = 'none';
         gameScreen.style.display = 'flex';
         animationActive = true; // Prevent normal rendering during animation
-        animate(); // Start the animation loop
         runStartAnimation(); // Start with animation
+        animate(); // Start the animation loop
         
         // Start background music
         startMusic();
@@ -2215,9 +2279,37 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Block all clicks during rock transitions - must be uninterruptible
-        if (transitionActive) {
+        // Block clicks during most transition phases, but allow clicking during gem pulse (phase 2) and dark glow (phase 5)
+        if (transitionActive && transitionPhase !== 2 && transitionPhase !== 5) {
             console.log('Rock transition in progress, ignoring click');
+            return;
+        }
+        
+        // Handle click during gem pulse phase (phase 2) - light success transition
+        if (transitionActive && transitionPhase === 2) {
+            console.log('User clicked during gem pulse - advancing to glow transition');
+            transitionPhase = 3;
+            transitionTimer = 0;
+            return;
+        }
+        
+        // Handle click during dark glow phase (phase 5) - dark failure transition
+        if (transitionActive && transitionPhase === 5) {
+            console.log('User clicked during dark glow - advancing to dark scene transition');
+            transitionPhase = 6;
+            transitionTimer = 0;
+            return;
+        }
+        
+        // Check for pending dark transition (failure response)
+        if (window.pendingDarkTransition) {
+            console.log('User clicked after dark failure response - starting dark transition');
+            // Start the dark transition now
+            transitionActive = true;
+            transitionPhase = 5;
+            transitionTimer = 0;
+            continueIndicator.style.display = 'none';
+            window.pendingDarkTransition = false; // Clear the flag
             return;
         }
         
@@ -2397,7 +2489,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Sisyphos - lower ground level for both hero and boss
         else if (gameStory.currentLocation.includes('sisyphos')) {
-            heroY = 170; // Lower hero position at Sisyphos
+            heroY = 176; // Hero at same level as bouncer at Sisyphos
         }
     }
 });
